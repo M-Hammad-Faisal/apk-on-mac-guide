@@ -70,6 +70,26 @@ body {
     box-shadow: var(--hover-shadow) !important;
     border-color: var(--primary-color);
   }
+  
+  // Ensure proper markdown rendering inside cards
+  ul, ol {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    
+    li {
+      margin-bottom: 0.3rem;
+    }
+  }
+  
+  p {
+    margin: 0.5rem 0;
+  }
+  
+  // Fix code blocks inside cards
+  pre {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+  }
 }
 
 // Button enhancements

@@ -36,34 +36,37 @@ image: /assets/images/apk-mac-banner.png
 
 <div class="method-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
   <h3 style="color: #4285f4; margin-top: 0;">🔰 For Beginners</h3>
-1. **Try BlueStacks** - The easiest way to get started
-   ```bash
-   ./scripts/setup-bluestacks.sh
-   ```
+  
+  1. **Try BlueStacks** - The easiest way to get started
+     ```bash
+     ./scripts/setup-bluestacks.sh
+     ```
 
-2. **Install any APK file**
-   - Just drag and drop your APK file into BlueStacks!
+  2. **Install any APK file**
+     - Just drag and drop your APK file into BlueStacks!
+</div>
 
 </div>
 
 <div class="method-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
   <h3 style="color: #4285f4; margin-top: 0;">⚙️ For Developers</h3>
-1. **Use Android Studio Emulator** - The most powerful option
-```bash
-./scripts/setup-android-studio.sh
-```
+  
+  1. **Use Android Studio Emulator** - The most powerful option
+     ```bash
+     ./scripts/setup-android-studio.sh
+     ```
 
-2. **Advanced Emulators**
-- Custom AVD: `./scripts/setup-custom-avd.sh --name DevPhone --play-store`
-- Docker Android: `./scripts/setup-docker-android.sh --android-version 33 --start-container`
-- QEMU Android: `./scripts/setup-qemu-android.sh`
-- Genymotion: `./scripts/setup-genymotion.sh --license-type personal`
-- Waydroid: `./scripts/setup-waydroid.sh --method docker`
+  2. **Advanced Emulators**
+     - Custom AVD: `./scripts/setup-custom-avd.sh --name DevPhone --play-store`
+     - Docker Android: `./scripts/setup-docker-android.sh --android-version 33 --start-container`
+     - QEMU Android: `./scripts/setup-qemu-android.sh`
+     - Genymotion: `./scripts/setup-genymotion.sh --license-type personal`
+     - Waydroid: `./scripts/setup-waydroid.sh --method docker`
 
-3. **Install APK with our script**
-```bash
-./scripts/install-apk.sh your-app.apk
-```
+  3. **Install APK with our script**
+     ```bash
+     ./scripts/install-apk.sh your-app.apk
+     ```
 </div>
 
 <h2 style="border-bottom: 2px solid #4285f4; padding-bottom: 0.5rem; color: #202124; margin-top: 3rem;">📚 What's Inside This Guide</h2>
@@ -71,32 +74,35 @@ image: /assets/images/apk-mac-banner.png
 <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
   <div class="feature-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <h3 style="color: #4285f4; margin-top: 0;">📖 Complete Documentation</h3>
-- **[Setup Scripts](scripts/)** - Automated installation scripts
-- **[Troubleshooting Guide](TROUBLESHOOTING)** - Solutions for common issues
-- **[Testing Workflow](TESTING)** - Professional APK testing procedures
+    
+    - **[Setup Scripts](scripts/)** - Automated installation scripts
+    - **[Troubleshooting Guide](TROUBLESHOOTING)** - Solutions for common issues
+    - **[Testing Workflow](TESTING)** - Professional APK testing procedures
 
   </div>
   
   <div class="feature-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <h3 style="color: #4285f4; margin-top: 0;">🎯 Multiple Methods Covered</h3>
-- **Android Studio Emulator** (Recommended for developers)
-- **Custom AVD Configuration** (Advanced developers)
-- **BlueStacks** (Best for casual users)
-- **Genymotion** (Professional testing)
-- **Docker Android** (Containerized environments)
-- **QEMU Android x86** (Direct virtualization)
-- **Waydroid** (Linux containers)
-- **NoxPlayer, MEmu** (Gaming emulators)
-- **Online APK runners** (No installation needed)
+    
+    - **Android Studio Emulator** (Recommended for developers)
+    - **Custom AVD Configuration** (Advanced developers)
+    - **BlueStacks** (Best for casual users)
+    - **Genymotion** (Professional testing)
+    - **Docker Android** (Containerized environments)
+    - **QEMU Android x86** (Direct virtualization)
+    - **Waydroid** (Linux containers)
+    - **NoxPlayer, MEmu** (Gaming emulators)
+    - **Online APK runners** (No installation needed)
 
   </div>
   
   <div class="feature-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <h3 style="color: #4285f4; margin-top: 0;">🔧 Professional Tools</h3>
-- Automated setup scripts
-- APK installation utilities
-- Performance testing tools
-- Debugging commands and techniques
+    
+    - Automated setup scripts
+    - APK installation utilities
+    - Performance testing tools
+    - Debugging commands and techniques
   </div>
 </div>
 
@@ -170,26 +176,24 @@ image: /assets/images/apk-mac-banner.png
 <div class="links-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
   <div class="links-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <h3 style="color: #4285f4; margin-top: 0;">🎯 Choose Your Method</h3>
-    <ul style="padding-left: 1.5rem; margin-bottom: 0;">
-- [Android Studio Emulator Setup](README.md#method-1-android-studio-emulator-recommended) - Most reliable, full Android API support
-- [Custom AVD Configuration](README.md#custom-android-virtual-devices-avd) - Advanced customization
-- [BlueStacks Setup](README.md#method-2-third-party-emulators) - Easiest to use, great for gaming
-- [Genymotion Professional](README.md#genymotion-professional) - Professional testing platform
-- [Docker Android Containers](README.md#docker-android-containers) - Containerized environments
-- [QEMU Android x86](README.md#qemu-android-x86) - Direct virtualization
-- [Waydroid Containers](README.md#waydroid-linux-container) - Linux container technology
-- [Online APK Runners](README.md#method-4-online-apk-runners) - No installation required
+    
+    - [Android Studio Emulator Setup](README.md#method-1-android-studio-emulator-recommended) - Most reliable, full Android API support
+    - [Custom AVD Configuration](README.md#custom-android-virtual-devices-avd) - Advanced customization
+    - [BlueStacks Setup](README.md#method-2-third-party-emulators) - Easiest to use, great for gaming
+    - [Genymotion Professional](README.md#genymotion-professional) - Professional testing platform
+    - [Docker Android Containers](README.md#docker-android-containers) - Containerized environments
+    - [QEMU Android x86](README.md#qemu-android-x86) - Direct virtualization
+    - [Waydroid Containers](README.md#waydroid-linux-container) - Linux container technology
+    - [Online APK Runners](README.md#method-4-online-apk-runners) - No installation required
 
-    </ul>
   </div>
   
   <div class="links-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <h3 style="color: #4285f4; margin-top: 0;">🚨 Need Help?</h3>
-    <ul style="padding-left: 1.5rem; margin-bottom: 0;">
-- [Common Issues](TROUBLESHOOTING.md) - Fix installation and performance problems
-- [Testing Guide](TESTING.md) - Professional APK testing procedures
-- [GitHub Issues](https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues) - Report bugs or request features
-    </ul>
+    
+    - [Common Issues](TROUBLESHOOTING.md) - Fix installation and performance problems
+    - [Testing Guide](TESTING.md) - Professional APK testing procedures
+    - [GitHub Issues](https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues) - Report bugs or request features
   </div>
 </div>
 
@@ -199,28 +203,26 @@ image: /assets/images/apk-mac-banner.png
   <div class="update-column" style="flex: 1; min-width: 300px;">
     <div class="update-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
       <h3 style="color: #4285f4; margin-top: 0;">Recent Additions</h3>
-      <ul style="padding-left: 1.5rem; margin-bottom: 0;">
-- ✨ **5 New Advanced Emulator Solutions** - QEMU, Custom AVD, Docker, Genymotion, Waydroid
-- 🚀 **Professional-Grade Testing** - Enterprise emulators with full customization
-- 📦 **Containerized Android** - Docker and Linux container support
-- 🔧 **Universal APK Installer** - Works with all emulator types
-- 📚 **Enhanced Documentation** - Complete setup guides for each method
-- 🐛 **Advanced Troubleshooting** - Method-specific solutions
-- 🧪 **CI/CD Integration** - Docker and automated testing support
+      
+      - ✨ **5 New Advanced Emulator Solutions** - QEMU, Custom AVD, Docker, Genymotion, Waydroid
+      - 🚀 **Professional-Grade Testing** - Enterprise emulators with full customization
+      - 📦 **Containerized Android** - Docker and Linux container support
+      - 🔧 **Universal APK Installer** - Works with all emulator types
+      - 📚 **Enhanced Documentation** - Complete setup guides for each method
+      - 🐛 **Advanced Troubleshooting** - Method-specific solutions
+      - 🧪 **CI/CD Integration** - Docker and automated testing support
 
-      </ul>
     </div>
   </div>
   
   <div class="update-column" style="flex: 1; min-width: 300px;">
     <div class="update-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
       <h3 style="color: #4285f4; margin-top: 0;">Coming Soon</h3>
-      <ul style="padding-left: 1.5rem; margin-bottom: 0;">
-- 📱 iOS app simulation guide
-- 🎮 Gaming-specific optimizations
-- 🤖 CI/CD integration examples
-- 📊 Performance benchmarking tools
-      </ul>
+      
+      - 📱 iOS app simulation guide
+      - 🎮 Gaming-specific optimizations
+      - 🤖 CI/CD integration examples
+      - 📊 Performance benchmarking tools
     </div>
   </div>
 </div>
@@ -229,22 +231,22 @@ image: /assets/images/apk-mac-banner.png
 
 <div class="contribute-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 1.5rem;">
   <p style="margin-top: 0;">This project is open source and welcomes contributions! Here's how you can help:</p>
-
-- 🐛 [Report bugs](https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues)
-- 💡 [Suggest features](https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues)
-- 📖 Improve documentation
-- 🧪 Add testing scripts
-- 🔧 Submit bug fixes
+  
+  - 🐛 [Report bugs](https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues)
+  - 💡 [Suggest features](https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues)
+  - 📖 Improve documentation
+  - 🧪 Add testing scripts
+  - 🔧 Submit bug fixes
 </div>
 
 <h2 style="border-bottom: 2px solid #4285f4; padding-bottom: 0.5rem; color: #202124; margin-top: 3rem;">👨‍👩‍👧‍👦 Community</h2>
 
 <div class="community-card" style="background-color: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 1.5rem;">
   <p style="margin-top: 0;">Join our community of developers and Mac users running Android apps:</p>
-
-- **GitHub Discussions** - Ask questions and share tips
-- **Issues** - Report problems and request features
-- **Pull Requests** - Contribute improvements
+  
+  - **GitHub Discussions** - Ask questions and share tips
+  - **Issues** - Report problems and request features
+  - **Pull Requests** - Contribute improvements
 </div>
 
 ---

@@ -12,6 +12,10 @@ baseurl: "/apk-on-mac-guide"
 markdown: kramdown
 highlighter: rouge
 theme: minima
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
 
 # Enable plugins
 plugins:
