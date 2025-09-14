@@ -12,7 +12,6 @@ A comprehensive guide to running Android APK files on macOS using various method
 - [Method 1: Android Studio Emulator (Recommended)](#method-1-android-studio-emulator-recommended)
 - [Method 2: Third-Party Emulators](#method-2-third-party-emulators)
 - [Method 3: Online APK Runners](#method-3-online-apk-runners)
-- [Method 4: ARC Welder (Chrome)](#method-4-arc-welder-chrome)
 - [Quick Setup Scripts](#quick-setup-scripts)
 - [Troubleshooting](#troubleshooting)
 - [APK Testing Workflow](#apk-testing-workflow)
@@ -25,7 +24,7 @@ Android APK files are designed to run on Android devices, but there are several 
 1. **Android Studio Emulator** - Official Google solution
 2. **Third-party emulators** - BlueStacks, NoxPlayer, etc.
 3. **Online APK runners** - Browser-based solutions
-4. **ARC Welder** - Chrome extension (deprecated but still functional)
+4. **Advanced solutions** - Custom AVD, Docker, QEMU, Waydroid
 
 ## Method 1: Android Studio Emulator (Recommended)
 
@@ -238,15 +237,6 @@ For quick testing without installing software:
 - Professional testing platform
 - Paid service with free tier
 
-## Method 5: ARC Welder (Chrome)
-
-**Note: ARC Welder is deprecated but may still work**
-
-1. Install Chrome
-2. Add ARC Welder extension
-3. Load APK file
-4. Configure settings
-5. Run app
 
 ## Quick Setup Scripts
 

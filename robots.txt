@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://M-Hammad-Faisal.github.io/apk-on-mac-guide/sitemap.xml
+
+# Allow all search engines to crawl the site
+# Prioritize main pages
+Crawl-delay: 1
+
+# Block access to system files if any exist
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /.sass-cache/
+Disallow: /.jekyll-cache/
+Disallow: /node_modules/
+Disallow: /vendor/

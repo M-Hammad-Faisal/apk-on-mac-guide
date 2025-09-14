@@ -1,8 +1,9 @@
 # GitHub Pages Configuration for APK on Mac Guide
 
 # Site settings
-title: "Running APK Files on Mac - Complete Guide"
-description: "A comprehensive guide to running Android APK files on macOS using various methods including emulators, simulators, and online tools."
+title: "Run Android APK Files on Mac - Ultimate Guide [2025]"
+description: "Complete guide for running Android APK files on macOS. Includes easy setup scripts for BlueStacks, Android Studio, Genymotion, and advanced emulators - perfect for developers and casual users."
+tagline: "The most comprehensive guide with automated setup scripts for all macOS versions including Apple Silicon"
 author: "M-Hammad-Faisal"
 url: "https://M-Hammad-Faisal.github.io"
 baseurl: "/apk-on-mac-guide"
@@ -17,6 +18,18 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-redirect-from
+
+# SEO settings
+keywords: "android apk on mac, run apk on macos, android emulator mac, bluestacks mac, genymotion mac, android studio emulator, apple silicon android, mac android apps, apk installer mac, android on macbook"
+twitter:
+  username: M_Hammad_Faisal
+  card: summary_large_image
+social:
+  name: M-Hammad-Faisal
+  links:
+    - "https://github.com/M-Hammad-Faisal"
+    - "https://twitter.com/M_Hammad_Faisal"
 
 # Navigation
 navigation:
@@ -38,8 +51,10 @@ linkedin_username: # Add if available
 
 # SEO settings
 lang: "en"
+locale: "en_US"
 image: "/assets/images/apk-mac-banner.png" # Add banner image if created
 logo: "/assets/images/logo.png" # Add logo if created
+timezone: "UTC"
 
 # Footer
 footer_links:
@@ -52,6 +67,18 @@ footer_links:
 
 # Analytics (add if needed)
 google_analytics: # Add Google Analytics ID if available
+
+# Additional SEO
+webmaster_verifications:
+  google: # Add Google Search Console verification ID if available
+  bing: # Add Bing Webmaster verification ID if available
+
+# JSON-LD structured data
+author_name: "M-Hammad-Faisal"
+author_url: "https://github.com/M-Hammad-Faisal"
+organization:
+  name: "M-Hammad-Faisal"
+  url: "https://github.com/M-Hammad-Faisal"
 
 # Exclude from processing
 exclude:

@@ -1,0 +1,268 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+// Custom variables
+:root {
+  --primary-color: #4285f4;
+  --secondary-color: #34a853;
+  --accent-color: #fbbc05;
+  --error-color: #ea4335;
+  --text-color: #202124;
+  --light-bg: #f8f9fa;
+  --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --hover-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  --border-radius: 8px;
+  --large-border-radius: 12px;
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+}
+
+// Enhanced body styles
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #fafafa;
+}
+
+// Container improvements
+.site-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+// Enhanced hero banner
+.hero-banner {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+  background-size: 400% 400% !important;
+  animation: gradientShift 8s ease infinite;
+  
+  h1 {
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  p {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+// Card hover effects
+.method-card, .feature-card, .links-card, .update-card, 
+.contribute-card, .community-card, .license-card {
+  transition: all 0.3s ease;
+  border: 1px solid #e8eaed;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--hover-shadow) !important;
+    border-color: var(--primary-color);
+  }
+}
+
+// Button enhancements
+a[href^="#"], a[href*="github.com"], a[href*="scripts/"] {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+}
+
+// Code block improvements
+pre, code {
+  background-color: #f8f9fa !important;
+  border: 1px solid #e8eaed;
+  border-radius: var(--border-radius);
+  font-family: 'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+}
+
+pre {
+  padding: 1rem !important;
+  overflow-x: auto;
+  
+  code {
+    background-color: transparent !important;
+    border: none;
+    padding: 0;
+  }
+}
+
+// Table styling
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  
+  th, td {
+    text-align: left;
+    vertical-align: top;
+  }
+  
+  th {
+    font-weight: 600;
+  }
+}
+
+// Badge styling
+img[src*="shields.io"] {
+  margin: 2px;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .hero-banner {
+    padding: 1.5rem !important;
+    
+    h1 {
+      font-size: 2rem !important;
+    }
+    
+    p {
+      font-size: 1rem !important;
+    }
+    
+    div {
+      flex-direction: column !important;
+      
+      a {
+        margin: 5px 0 !important;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+  
+  .features-grid, .benefits-grid, .links-container, .update-container {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .update-container {
+    flex-direction: column !important;
+  }
+  
+  // Mobile-friendly tables
+  table {
+    font-size: 0.85rem;
+    
+    th, td {
+      padding: 0.5rem !important;
+    }
+  }
+  
+  // Stack buttons vertically on mobile
+  .site-footer div[style*="flex"] {
+    flex-direction: column !important;
+    gap: 10px !important;
+    
+    a {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .site-content {
+    padding: 0 15px;
+  }
+  
+  .method-card, .feature-card, .links-card, .update-card,
+  .contribute-card, .community-card, .license-card {
+    padding: 1rem !important;
+  }
+  
+  .hero-banner {
+    margin: 0 -15px 2rem -15px !important;
+    border-radius: 0 !important;
+  }
+}
+
+// Enhanced accessibility
+a:focus, button:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+// Improved list spacing
+ul, ol {
+  margin-bottom: 1rem;
+  
+  li {
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Header improvements
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-top: 0;
+  
+  &:not(.hero-banner h1) {
+    margin-bottom: 1rem;
+  }
+}
+
+h2[style*="border-bottom"] {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+  }
+}
+
+// Loading animation for images
+img {
+  transition: opacity 0.3s ease;
+  
+  &:not([src*="shields.io"]) {
+    border-radius: var(--border-radius);
+  }
+}
+
+// Print styles
+@media print {
+  .hero-banner,
+  .site-footer,
+  nav {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .method-card, .feature-card, .links-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+  }
+}
