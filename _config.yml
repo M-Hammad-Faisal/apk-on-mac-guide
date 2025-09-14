@@ -1,0 +1,65 @@
+# GitHub Pages Configuration for APK on Mac Guide
+
+# Site settings
+title: "Running APK Files on Mac - Complete Guide"
+description: "A comprehensive guide to running Android APK files on macOS using various methods including emulators, simulators, and online tools."
+author: "M-Hammad-Faisal"
+url: "https://m-hammad-faisal.github.io"
+baseurl: "/apk-on-mac-guide"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Enable plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Navigation
+navigation:
+  - title: "Home"
+    url: "/"
+  - title: "Setup Scripts"
+    url: "/scripts/"
+  - title: "Troubleshooting"
+    url: "/TROUBLESHOOTING"
+  - title: "Testing Guide"
+    url: "/TESTING"
+  - title: "GitHub"
+    url: "https://github.com/m-hammad-faisal/apk-on-mac-guide"
+
+# Social links
+github_username: m-hammad-faisal
+twitter_username: # Add if available
+linkedin_username: # Add if available
+
+# SEO settings
+lang: "en"
+image: "/assets/images/apk-mac-banner.png" # Add banner image if created
+logo: "/assets/images/logo.png" # Add logo if created
+
+# Footer
+footer_links:
+  - title: "GitHub Profile"
+    url: "https://github.com/m-hammad-faisal"
+  - title: "More Projects"
+    url: "https://github.com/m-hammad-faisal?tab=repositories"
+  - title: "Issues"
+    url: "https://github.com/m-hammad-faisal/apk-on-mac-guide/issues"
+
+# Analytics (add if needed)
+google_analytics: # Add Google Analytics ID if available
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
+  - .DS_Store
+  - scripts/*.sh
