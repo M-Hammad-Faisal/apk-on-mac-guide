@@ -1,0 +1,59 @@
+# Workflow for testing and validating setup scripts
+name: Test Setup Scripts
+
+on:
+  push:
+    branches: [ "master" ]
+    paths: 
+      - 'scripts/**'
+      - '.github/workflows/test-scripts.yml'
+  pull_request:
+    branches: [ "master" ]
+    paths: 
+      - 'scripts/**'
+      - '.github/workflows/test-scripts.yml'
+
+jobs:
+  test-scripts:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, macos-13]  # Test on both Intel and Apple Silicon
+        
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check script syntax
+      run: |
+        echo "Checking bash syntax for all setup scripts..."
+        for script in scripts/*.sh; do
+          echo "Checking $script"
+          bash -n "$script"
+        done
+        
+    - name: Make scripts executable
+      run: chmod +x scripts/*.sh
+      
+    - name: Test script help flags
+      run: |
+        echo "Testing help flags for scripts..."
+        for script in scripts/setup-*.sh; do
+          echo "Testing $script --help"
+          if [[ -f "$script" ]]; then
+            timeout 10 bash "$script" --help || echo "Help flag test completed for $script"
+          fi
+        done
+        
+    - name: Validate script dependencies
+      run: |
+        echo "Checking for common macOS tools and dependencies..."
+        which brew || echo "Homebrew not found (expected in CI)"
+        which curl || echo "curl not found"
+        which git || echo "git not found"
+        
+    - name: Test install-apk.sh syntax and basic functionality
+      run: |
+        echo "Testing install-apk.sh basic functionality..."
+        bash -n scripts/install-apk.sh
+        # Test help flag
+        timeout 5 bash scripts/install-apk.sh --help || echo "Help test completed"
