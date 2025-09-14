@@ -45,8 +45,8 @@ Welcome to the most comprehensive guide for running Android APK files on macOS! 
 
 ### 📖 Complete Documentation
 - **[Setup Scripts](scripts/)** - Automated installation scripts
-- **[Troubleshooting Guide](TROUBLESHOOTING.md)** - Solutions for common issues
-- **[Testing Workflow](TESTING.md)** - Professional APK testing procedures
+- **[Troubleshooting Guide](TROUBLESHOOTING)** - Solutions for common issues
+- **[Testing Workflow](TESTING)** - Professional APK testing procedures
 
 ### 🎯 Multiple Methods Covered
 - **Android Studio Emulator** (Recommended for developers)
@@ -99,7 +99,7 @@ Welcome to the most comprehensive guide for running Android APK files on macOS! 
 ### 🚨 Need Help?
 - [Common Issues](TROUBLESHOOTING.md) - Fix installation and performance problems
 - [Testing Guide](TESTING.md) - Professional APK testing procedures
-- [GitHub Issues](https://github.com/m-hammad-faisal/apk-on-mac-guide/issues) - Report bugs or request features
+- [GitHub Issues](https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues) - Report bugs or request features
 
 ## Latest Updates
 
@@ -122,8 +122,8 @@ Welcome to the most comprehensive guide for running Android APK files on macOS! 
 
 This project is open source and welcomes contributions! Here's how you can help:
 
-- 🐛 [Report bugs](https://github.com/m-hammad-faisal/apk-on-mac-guide/issues)
-- 💡 [Suggest features](https://github.com/m-hammad-faisal/apk-on-mac-guide/issues)
+- 🐛 [Report bugs](https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues)
+- 💡 [Suggest features](https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues)
 - 📖 Improve documentation
 - 🧪 Add testing scripts
 - 🔧 Submit bug fixes
@@ -146,11 +146,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div style="text-align: center; margin-top: 50px; padding: 20px; border-top: 1px solid #eee;">
   <p style="font-size: 18px; color: #666;">
-    <strong>Made with ❤️ by <a href="https://github.com/m-hammad-faisal" target="_blank">M-Hammad-Faisal</a></strong>
+    <strong>Made with ❤️ by <a href="https://github.com/M-Hammad-Faisal" target="_blank">M-Hammad-Faisal</a></strong>
   </p>
   <p style="margin-top: 10px;">
-    <a href="https://github.com/m-hammad-faisal" target="_blank">More Projects</a> • 
-    <a href="https://github.com/m-hammad-faisal/apk-on-mac-guide" target="_blank">Star on GitHub</a> • 
-    <a href="https://github.com/m-hammad-faisal/apk-on-mac-guide/issues" target="_blank">Report Issue</a>
+    <a href="https://github.com/M-Hammad-Faisal" target="_blank">More Projects</a> • 
+    <a href="https://github.com/M-Hammad-Faisal/apk-on-mac-guide" target="_blank">Star on GitHub</a> • 
+    <a href="https://github.com/M-Hammad-Faisal/apk-on-mac-guide/issues" target="_blank">Report Issue</a>
   </p>
 </div>
