@@ -37,13 +37,22 @@ show_usage() {
     echo "  -d, --device    Specify target device/emulator"
     echo "  -r, --replace   Replace existing app if installed"
     echo "  -g, --grant     Grant all permissions automatically"
+    echo "  -t, --type      Force emulator type detection (avd|genymotion|docker|qemu|waydroid)"
+    echo "  --docker-container NAME  Specify Docker container name (default: android-container)"
+    echo "  --genymotion-ip IP       Specify Genymotion device IP"
+    echo "  --qemu-port PORT         QEMU ADB port (default: 5555)"
+    echo "  --waydroid-method METHOD Waydroid method (container|vm|local)"
     echo "  -h, --help      Show this help message"
     echo ""
     echo "Examples:"
-    echo "  $0 myapp.apk"
-    echo "  $0 myapp.apk --replace"
-    echo "  $0 myapp.apk --device emulator-5554"
-    echo "  $0 myapp.apk --replace --grant"
+    echo "  $0 myapp.apk                              # Auto-detect emulator"
+    echo "  $0 myapp.apk --replace --grant            # Standard options"
+    echo "  $0 myapp.apk --device emulator-5554       # Specific AVD device"
+    echo "  $0 myapp.apk --type genymotion            # Force Genymotion detection"
+    echo "  $0 myapp.apk --docker-container my-android # Specific Docker container"
+    echo "  $0 myapp.apk --genymotion-ip 192.168.56.101 # Specific Genymotion IP"
+    echo "  $0 myapp.apk --qemu-port 5556             # QEMU with custom port"
+    echo "  $0 myapp.apk --waydroid-method vm         # Waydroid in VM"
 }
 
 # Parse command line arguments
@@ -51,6 +60,11 @@ APK_FILE=""
 DEVICE=""
 REPLACE_FLAG=""
 GRANT_PERMISSIONS=""
+EMULATOR_TYPE=""
+DOCKER_CONTAINER="android-container"
+GENYMOTION_IP=""
+QEMU_PORT="5555"
+WAYDROID_METHOD="local"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -65,6 +79,26 @@ while [[ $# -gt 0 ]]; do
         -g|--grant)
             GRANT_PERMISSIONS="yes"
             shift
+            ;;
+        -t|--type)
+            EMULATOR_TYPE="$2"
+            shift 2
+            ;;
+        --docker-container)
+            DOCKER_CONTAINER="$2"
+            shift 2
+            ;;
+        --genymotion-ip)
+            GENYMOTION_IP="$2"
+            shift 2
+            ;;
+        --qemu-port)
+            QEMU_PORT="$2"
+            shift 2
+            ;;
+        --waydroid-method)
+            WAYDROID_METHOD="$2"
+            shift 2
             ;;
         -h|--help)
             show_usage
@@ -118,11 +152,246 @@ if ! command -v adb &> /dev/null; then
     exit 1
 fi
 
-# Start ADB server
+# Function to detect emulator type
+detect_emulator_type() {
+    if [[ -n "$EMULATOR_TYPE" ]]; then
+        echo "$EMULATOR_TYPE"
+        return
+    fi
+    
+    print_status "Auto-detecting emulator type..."
+    
+    # Check for Docker containers
+    if command -v docker &> /dev/null && docker ps | grep -q "android-container\|waydroid-container"; then
+        if docker ps | grep -q "waydroid-container"; then
+            echo "waydroid"
+        else
+            echo "docker"
+        fi
+        return
+    fi
+    
+    # Check for Genymotion (VirtualBox VMs with specific pattern)
+    if command -v VBoxManage &> /dev/null; then
+        if VBoxManage list runningvms | grep -q "Genymotion"; then
+            echo "genymotion"
+            return
+        fi
+    fi
+    
+    # Check for QEMU process
+    if pgrep -f "qemu-system" > /dev/null; then
+        echo "qemu"
+        return
+    fi
+    
+    # Check for Waydroid on local system or in VM
+    if command -v waydroid &> /dev/null || command -v multipass &> /dev/null; then
+        echo "waydroid"
+        return
+    fi
+    
+    # Default to AVD (Android Studio emulator)
+    echo "avd"
+}
+
+# Function to install APK to Docker Android
+install_docker_android() {
+    print_status "Installing APK to Docker Android container..."
+    
+    if ! docker ps | grep -q "$DOCKER_CONTAINER"; then
+        print_error "Docker container '$DOCKER_CONTAINER' not running"
+        echo "To start container: ~/.docker-android/start-android.sh"
+        exit 1
+    fi
+    
+    # Copy APK to container
+    APK_NAME=$(basename "$APK_FILE")
+    docker cp "$APK_FILE" "$DOCKER_CONTAINER:/tmp/$APK_NAME"
+    
+    # Connect ADB and install
+    adb connect localhost:5555
+    sleep 2
+    
+    if adb devices | grep -q "5555.*device"; then
+        install_cmd="adb -s localhost:5555 install"
+        [[ -n "$REPLACE_FLAG" ]] && install_cmd="$install_cmd $REPLACE_FLAG"
+        install_cmd="$install_cmd /tmp/$APK_NAME"
+        
+        if docker exec "$DOCKER_CONTAINER" $install_cmd; then
+            print_success "APK installed to Docker container!"
+            # Clean up
+            docker exec "$DOCKER_CONTAINER" rm "/tmp/$APK_NAME"
+        else
+            print_error "Failed to install APK to Docker container"
+            exit 1
+        fi
+    else
+        print_error "Could not connect to Docker Android via ADB"
+        exit 1
+    fi
+}
+
+# Function to install APK to Genymotion
+install_genymotion() {
+    print_status "Installing APK to Genymotion device..."
+    
+    # Determine Genymotion IP
+    if [[ -z "$GENYMOTION_IP" ]]; then
+        # Look for typical Genymotion IP patterns
+        DEVICES=$(adb devices | grep "192.168.56." | awk '{print $1}')
+        if [[ -z "$DEVICES" ]]; then
+            print_error "No Genymotion devices found. Please ensure:"
+            echo "1. Genymotion virtual device is running"
+            echo "2. ADB is enabled in Genymotion settings"
+            exit 1
+        fi
+        GENYMOTION_IP=$(echo "$DEVICES" | head -n 1)
+    fi
+    
+    print_status "Using Genymotion device: $GENYMOTION_IP"
+    
+    # Connect to device if not already connected
+    if ! adb devices | grep -q "$GENYMOTION_IP.*device"; then
+        adb connect "$GENYMOTION_IP"
+        sleep 2
+    fi
+    
+    # Install APK
+    install_cmd="adb -s $GENYMOTION_IP install"
+    [[ -n "$REPLACE_FLAG" ]] && install_cmd="$install_cmd $REPLACE_FLAG"
+    install_cmd="$install_cmd \"$APK_FILE\""
+    
+    if eval "$install_cmd"; then
+        print_success "APK installed to Genymotion device!"
+    else
+        print_error "Failed to install APK to Genymotion device"
+        exit 1
+    fi
+}
+
+# Function to install APK to QEMU
+install_qemu() {
+    print_status "Installing APK to QEMU Android..."
+    
+    # Connect to QEMU ADB port
+    adb connect "localhost:$QEMU_PORT"
+    sleep 2
+    
+    if adb devices | grep -q "$QEMU_PORT.*device"; then
+        install_cmd="adb -s localhost:$QEMU_PORT install"
+        [[ -n "$REPLACE_FLAG" ]] && install_cmd="$install_cmd $REPLACE_FLAG"
+        install_cmd="$install_cmd \"$APK_FILE\""
+        
+        if eval "$install_cmd"; then
+            print_success "APK installed to QEMU Android!"
+        else
+            print_error "Failed to install APK to QEMU"
+            exit 1
+        fi
+    else
+        print_error "Could not connect to QEMU Android"
+        echo "Make sure QEMU Android is running: ~/.qemu-android/launch-android.sh"
+        exit 1
+    fi
+}
+
+# Function to install APK to Waydroid
+install_waydroid() {
+    print_status "Installing APK to Waydroid..."
+    
+    case $WAYDROID_METHOD in
+        "container")
+            if docker ps | grep -q "waydroid-container"; then
+                APK_NAME=$(basename "$APK_FILE")
+                docker cp "$APK_FILE" "waydroid-container:/shared/$APK_NAME"
+                if docker exec waydroid-container waydroid app install "/shared/$APK_NAME"; then
+                    print_success "APK installed to Waydroid container!"
+                    docker exec waydroid-container rm "/shared/$APK_NAME"
+                else
+                    print_error "Failed to install APK to Waydroid container"
+                    exit 1
+                fi
+            else
+                print_error "Waydroid container not running"
+                exit 1
+            fi
+            ;;
+        "vm")
+            if command -v multipass &> /dev/null; then
+                VM_IP=$(multipass info waydroid-vm | grep IPv4 | awk '{print $2}')
+                if [[ -n "$VM_IP" ]]; then
+                    APK_NAME=$(basename "$APK_FILE")
+                    scp "$APK_FILE" "ubuntu@$VM_IP:/tmp/$APK_NAME"
+                    if ssh ubuntu@$VM_IP "waydroid app install /tmp/$APK_NAME"; then
+                        print_success "APK installed to Waydroid VM!"
+                        ssh ubuntu@$VM_IP "rm /tmp/$APK_NAME"
+                    else
+                        print_error "Failed to install APK to Waydroid VM"
+                        exit 1
+                    fi
+                else
+                    print_error "Could not find Waydroid VM IP"
+                    exit 1
+                fi
+            else
+                print_error "Multipass not found for VM method"
+                exit 1
+            fi
+            ;;
+        "local")
+            if command -v waydroid &> /dev/null; then
+                if waydroid app install "$APK_FILE"; then
+                    print_success "APK installed to local Waydroid!"
+                else
+                    print_error "Failed to install APK to local Waydroid"
+                    exit 1
+                fi
+            else
+                print_error "Waydroid not found on local system"
+                exit 1
+            fi
+            ;;
+        *)
+            print_error "Unknown Waydroid method: $WAYDROID_METHOD"
+            exit 1
+            ;;
+    esac
+}
+
+# Detect emulator type
+EMULATOR_TYPE=$(detect_emulator_type)
+print_status "Detected emulator type: $EMULATOR_TYPE"
+
+# Handle installation based on emulator type
+case $EMULATOR_TYPE in
+    "docker")
+        install_docker_android
+        exit 0
+        ;;
+    "genymotion")
+        install_genymotion
+        exit 0
+        ;;
+    "qemu")
+        install_qemu
+        exit 0
+        ;;
+    "waydroid")
+        install_waydroid
+        exit 0
+        ;;
+    "avd"|*)
+        # Continue with standard AVD installation
+        print_status "Using standard AVD installation method"
+        ;;
+esac
+
+# Start ADB server for AVD installation
 print_status "Starting ADB server..."
 adb start-server
 
-# List available devices
+# List available devices for AVD
 print_status "Checking for available devices..."
 devices_output=$(adb devices 2>/dev/null || true)
 
@@ -138,6 +407,11 @@ if ! echo "$devices_output" | grep -q "device$"; then
     echo ""
     echo "To list available AVDs:"
     echo "   emulator -list-avds"
+    echo ""
+    echo "Or use one of the other emulator types:"
+    echo "   ./scripts/setup-docker-android.sh"
+    echo "   ./scripts/setup-genymotion.sh"
+    echo "   ./scripts/setup-qemu-android.sh"
     exit 1
 fi
 
@@ -246,12 +520,38 @@ fi
 echo ""
 print_status "Installation completed!"
 echo ""
-echo "Useful commands for installed app:"
-if [[ -n "$package_name" ]]; then
-    echo "  Launch app:     adb -s $TARGET_DEVICE shell am start -n $package_name/.MainActivity"
-    echo "  Uninstall app:  adb -s $TARGET_DEVICE uninstall $package_name"
-    echo "  App info:       adb -s $TARGET_DEVICE shell dumpsys package $package_name"
-    echo "  Clear data:     adb -s $TARGET_DEVICE shell pm clear $package_name"
+print_status "Emulator type: $EMULATOR_TYPE"
+if [[ "$EMULATOR_TYPE" == "avd" ]]; then
+    echo "Useful commands for installed app:"
+    if [[ -n "$package_name" ]]; then
+        echo "  Launch app:     adb -s $TARGET_DEVICE shell am start -n $package_name/.MainActivity"
+        echo "  Uninstall app:  adb -s $TARGET_DEVICE uninstall $package_name"
+        echo "  App info:       adb -s $TARGET_DEVICE shell dumpsys package $package_name"
+        echo "  Clear data:     adb -s $TARGET_DEVICE shell pm clear $package_name"
+    fi
+    echo "  List packages:  adb -s $TARGET_DEVICE shell pm list packages"
+    echo "  Device logs:    adb -s $TARGET_DEVICE logcat"
+else
+    echo "Emulator-specific management scripts:"
+    case $EMULATOR_TYPE in
+        "docker")
+            echo "  Container status: ~/.docker-android/status.sh"
+            echo "  Stop container:   ~/.docker-android/stop-android.sh"
+            echo "  Web access:       http://localhost:6080"
+            ;;
+        "genymotion")
+            echo "  Device management: ~/.genymotion-scripts/manage-devices.sh"
+            echo "  Launch Genymotion: ~/.genymotion-scripts/launch-genymotion.sh"
+            ;;
+        "qemu")
+            echo "  Connect ADB:      ~/.qemu-android/connect-adb.sh"
+            echo "  VNC access:       vnc://localhost:5901"
+            ;;
+        "waydroid")
+            echo "  Status check:     ~/.waydroid-mac/status.sh"
+            if [[ "$WAYDROID_METHOD" == "container" ]]; then
+                echo "  Web access:       http://localhost:3000"
+            fi
+            ;;
+    esac
 fi
-echo "  List packages:  adb -s $TARGET_DEVICE shell pm list packages"
-echo "  Device logs:    adb -s $TARGET_DEVICE logcat"

@@ -101,6 +101,27 @@ brew install --cask bluestacks
 - ❌ Limited customization
 - ❌ No system-level debugging
 
+### Genymotion (Professional)
+
+Professional-grade Android emulator with advanced features.
+
+```bash
+# Setup Genymotion with business license
+./scripts/setup-genymotion.sh --license-type business --create-device
+```
+
+**Advantages:**
+- ✅ Professional testing features
+- ✅ Multiple device configurations
+- ✅ Cloud device testing
+- ✅ Advanced debugging tools
+- ✅ CI/CD integration
+
+**Disadvantages:**
+- ❌ Requires VirtualBox
+- ❌ Paid licenses for full features
+- ❌ More complex setup
+
 ### NoxPlayer
 
 ```bash
@@ -114,11 +135,96 @@ brew install --cask bluestacks
 - ✅ Keyboard/mouse mapping
 
 ### Other Options
-- **Genymotion** - Professional Android emulator
 - **MEmu** - Gaming-focused emulator
 - **LDPlayer** - Lightweight gaming emulator
 
-## Method 3: Online APK Runners
+## Method 3: Advanced Emulation Solutions
+
+### Custom Android Virtual Devices (AVD)
+
+Create highly customized Android emulators with specific configurations.
+
+```bash
+# Create custom AVD with 8GB RAM and Play Store
+./scripts/setup-custom-avd.sh --name HighEndPhone --ram 8192 --play-store --gpu-mode host
+
+# Create tablet emulator
+./scripts/setup-custom-avd.sh --name TabletAVD --device Nexus_9 --resolution 2048x1536 --density 320
+```
+
+**Advantages:**
+- ✅ Complete hardware customization
+- ✅ Multiple Android versions
+- ✅ Google Play Store support
+- ✅ Professional debugging tools
+- ✅ Hardware acceleration
+
+### Docker Android Containers
+
+Run Android in containerized environments for consistent testing.
+
+```bash
+# Setup Docker Android with latest version
+./scripts/setup-docker-android.sh --android-version 33 --start-container
+
+# Access via web browser
+open http://localhost:6080
+```
+
+**Advantages:**
+- ✅ Consistent environments
+- ✅ Quick deployment
+- ✅ Web-based access
+- ✅ CI/CD friendly
+- ✅ Multiple instances
+
+### QEMU Android x86
+
+Run Android x86 directly using QEMU virtualization.
+
+```bash
+# Setup QEMU Android emulator
+./scripts/setup-qemu-android.sh
+
+# Launch with custom settings
+~/.qemu-android/launch-android.sh --memory 6144 --cpus 4
+```
+
+**Advantages:**
+- ✅ Native x86 performance
+- ✅ Full hardware control
+- ✅ Custom Android builds
+- ✅ Network simulation
+
+**Disadvantages:**
+- ❌ Complex setup
+- ❌ Requires manual Android installation
+- ❌ Limited Google services support
+
+### Waydroid (Linux Container)
+
+Android container technology for near-native performance.
+
+```bash
+# Setup via Docker (easiest)
+./scripts/setup-waydroid.sh --method docker --start-vm
+
+# Setup via Ubuntu VM (best performance)
+./scripts/setup-waydroid.sh --method multipass --memory 8192
+```
+
+**Advantages:**
+- ✅ Near-native performance
+- ✅ Lightweight containers
+- ✅ Full Android API support
+- ✅ Google Play Store compatible
+
+**Disadvantages:**
+- ❌ Requires Linux environment
+- ❌ Complex setup on macOS
+- ❌ VM/container overhead
+
+## Method 4: Online APK Runners
 
 For quick testing without installing software:
 
@@ -132,7 +238,7 @@ For quick testing without installing software:
 - Professional testing platform
 - Paid service with free tier
 
-## Method 4: ARC Welder (Chrome)
+## Method 5: ARC Welder (Chrome)
 
 **Note: ARC Welder is deprecated but may still work**
 
@@ -144,20 +250,41 @@ For quick testing without installing software:
 
 ## Quick Setup Scripts
 
-This repository includes automated setup scripts:
+This repository includes automated setup scripts for all emulator types:
 
 ```bash
 # Make scripts executable
 chmod +x scripts/*.sh
 
+# === Standard Emulators ===
 # Setup Android Studio emulator
 ./scripts/setup-android-studio.sh
 
 # Setup BlueStacks
 ./scripts/setup-bluestacks.sh
 
-# Install APK to running emulator
+# Setup Genymotion professional emulator
+./scripts/setup-genymotion.sh --license-type personal
+
+# === Advanced Solutions ===
+# Create custom AVD with specific configuration
+./scripts/setup-custom-avd.sh --name MyDevice --ram 6144 --play-store
+
+# Setup Docker Android container
+./scripts/setup-docker-android.sh --android-version 31 --start-container
+
+# Setup QEMU Android x86
+./scripts/setup-qemu-android.sh
+
+# Setup Waydroid container
+./scripts/setup-waydroid.sh --method docker
+
+# === Universal APK Installer ===
+# Install APK to any running emulator
 ./scripts/install-apk.sh path/to/app.apk
+
+# Install with specific options
+./scripts/install-apk.sh path/to/app.apk --replace --grant
 ```
 
 ## Troubleshooting
@@ -185,12 +312,27 @@ See [TESTING.md](TESTING.md) for comprehensive testing procedures and ADB comman
 
 ## System Requirements
 
+### General Requirements
+
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
 | macOS | 10.14 | 11.0+ |
 | RAM | 8GB | 16GB+ |
-| Storage | 10GB free | 20GB+ free |
+| Storage | 15GB free | 30GB+ free |
 | Processor | Intel i5 / M1 | Intel i7 / M1 Pro+ |
+
+### Method-Specific Requirements
+
+| Method | RAM | Storage | Special Requirements |
+|--------|-----|---------|---------------------|
+| Android Studio AVD | 8GB+ | 10GB+ | Android SDK, Intel HAXM/Hypervisor |
+| BlueStacks | 4GB+ | 5GB+ | Hardware acceleration |
+| **Genymotion** | 4GB+ | 8GB+ | VirtualBox, Genymotion account |
+| **Custom AVD** | 6GB+ | 15GB+ | Android SDK, multiple system images |
+| **Docker Android** | 8GB+ | 12GB+ | Docker Desktop, container support |
+| **QEMU** | 6GB+ | 15GB+ | VNC viewer, Android x86 ISO |
+| **Waydroid** | 6GB+ | 20GB+ | VM software (UTM/Multipass) |
+| Online APK | 2GB+ | 4GB+ | Modern web browser |
 
 ## Contributing
 
